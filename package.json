@@ -6,8 +6,12 @@
   "scripts": {
     "start": "node scraper.js"
   },
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
     "express": "^4.17.1",
     "puppeteer": "^21.3.8"
   }
 }
+
