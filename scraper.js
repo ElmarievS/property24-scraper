@@ -3,15 +3,23 @@ const express = require("express");
 const app = express();
 
 app.get("/search", async (req, res) => {
-  const { location = "durbanville", bedrooms = "3", price = "2000000" } = req.query;
+  const {
+    location = "potchefstroom",
+    bedrooms = "2",
+    price = "800000",
+    type = "buy" // default to 'buy' if not specified
+  } = req.query;
+
+  const basePath = type === "rent" ? "to-rent" : "for-sale";
+  const url = `https://www.property24.com/${basePath}/${location.toLowerCase()}/north-west/1?bedrooms=${bedrooms}&price-to=${price}`;
 
   const browser = await puppeteer.launch({
     headless: true,
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
-  const page = await browser.newPage();
 
-  const url = `https://www.property24.com/for-sale/${location.toLowerCase()}/western-cape/1?bedrooms=${bedrooms}&price-to=${price}`;
+  const page = await browser.newPage();
   await page.goto(url, { waitUntil: "networkidle2", timeout: 60000 });
 
   const properties = await page.evaluate(() => {
