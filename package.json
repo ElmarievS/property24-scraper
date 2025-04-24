@@ -1,0 +1,13 @@
+{
+  "name": "property24-scraper",
+  "version": "1.0.0",
+  "description": "Scraper that gets Property24 listings",
+  "main": "scraper.js",
+  "scripts": {
+    "start": "node scraper.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "puppeteer": "^21.3.8"
+  }
+}
